@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TTS Voice Cloning Summary</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 40px auto;
+            line-height: 1.6;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 4px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>TTS Voice Cloning Assignment Summary</h1>
+
+<h2>Objective</h2>
+<p>
+The objective of this assignment was to generate a style tensor that closely matches the target speaker using the provided Kokoro TTS model. The model weights remained frozen throughout the process, and only the voice embedding tensor was optimized.
+</p>
+
+<h2>Methodology</h2>
+<ul>
+    <li>Evaluated all provided stock voices using the supplied speaker similarity metric.</li>
+    <li>Generated the provided baseline blend using the two highest-scoring stock voices.</li>
+    <li>Modified <code>search.py</code> to perform stochastic optimization with multi-sentence evaluation, structured tensor perturbations, adaptive step sizes, and simulated annealing acceptance.</li>
+    <li>Compared the optimized tensor against the baseline using the same similarity metric.</li>
+</ul>
+
+<h2>Experiments</h2>
+<p>
+Several optimization iterations were performed starting from the baseline blend. While the search explored nearby regions of the embedding space, none of the generated candidates consistently exceeded the baseline similarity score.
+</p>
+
+<h2>Results</h2>
+<p>
+The baseline blended voice achieved the highest similarity score during experimentation (approximately <strong>0.6331</strong>). Since the optimization search did not improve upon this score, the baseline tensor was selected as the final submission and saved as <code>voice.pt</code>.
+</p>
+
+<h2>Conclusion</h2>
+<p>
+The assignment demonstrates that simple blending of high-quality pretrained voices provides a strong initialization. Although stochastic local search explored additional candidate embeddings, the baseline remained the best-performing solution within the available time budget.
+</p>
+
+</body>
+</html>
