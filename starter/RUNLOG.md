@@ -1,40 +1,70 @@
 # RUNLOG
 
-## Run 1
-Start: Best stock voice ranking using blend.py
-Top voice: af_nova
-Baseline similarity: 0.6331
 
-## Run 2
-Modified search.py:
-- Multi-sentence fitness
-- Random row perturbation
+## Run 1 – Stock Voice Baseline
+
+**Method**
+- Evaluated every stock voice embedding provided with the starter code.
+- Synthesized the evaluation sentence for each voice.
+- Measured cosine similarity against the target speaker embedding.
+
+**Result**
+- Best stock voice: `af_nova`
+- Best similarity: **0.6331**
+
+---
+
+## Run 2 – Search-Based Optimization
+
+**Method**
+Modified `search.py` to perform iterative optimization using:
+- Multi-sentence fitness evaluation
+- Random row perturbations
+- Simulated annealing
 - Annealed step size
-- Simulated annealing acceptance
+- Acceptance of occasional worse candidates to escape local optima
 
-Iterations: ~70
-Best similarity: 0.6260
+**Result**
+- Approximately 70 optimization iterations
+- Best similarity: **0.6260**
 
-Observation:
-The search converged but did not outperform the baseline. Audio quality remained acceptable, but similarity score was lower than the baseline blend.
+**Observation**
+The optimization converged but did not outperform the baseline stock voice. Audio quality remained acceptable, but speaker similarity was lower.
 
-Final decision:
-Submitted the baseline blend tensor because it achieved the highest similarity score (0.6331).
+---
 
-# RUNLOG
+## Run 3 – Blend Search
 
-## Baseline
-- Evaluated all stock voices against the reference speaker.
+**Method**
+Implemented a weighted blend search (`blend.py`):
 
-## Blend Search
-- Ranked stock voices by similarity.
-- Selected the top 5 voices.
-- Performed pairwise weighted blend search over the top voices.
-- Tested 210 blend candidates (10 voice pairs × 21 weight settings).
-- Best blend found:
-  - zm_yunxia: 0.75
-  - hm_omega: 0.25
-- Best similarity score: **0.6488**
+1. Ranked all stock voices by similarity.
+2. Selected the top five voices.
+3. Evaluated every pair of the top voices.
+4. Tested 21 blend weights for each pair.
+5. Compared every synthesized sample against the target embedding.
 
-## Output
-- Saved final voice embedding as `voice.pt`.
+**Search Space**
+- Top voices: 5
+- Voice pairs: 10
+- Blend weights per pair: 21
+- Total candidates evaluated: **210**
+
+**Best Blend**
+- `zm_yunxia`: **0.75**
+- `hm_omega`: **0.25**
+
+**Best Similarity**
+- **0.6488**
+
+---
+
+## Final Submission
+
+The pairwise weighted blend search produced the highest speaker similarity achieved during the assessment.
+
+**Submitted Voice**
+- `voice.pt`
+
+**Similarity Score**
+- **0.6488**
